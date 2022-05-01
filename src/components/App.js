@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import {authService} from "mybase";
 import { onAuthStateChanged } from "firebase/auth";
+import "css/main.css";
 
 function App() {
     const [init, setInit] = useState(false);
     const [userObj, setUserObj] = useState(null);
+    const [newDisplayName, setNewDisplayName] = useState("");
     useEffect(() => {
         onAuthStateChanged(authService, (user) => {
         if(user) {
@@ -17,8 +19,7 @@ function App() {
         })
     },[])
     const refreshUser = () => {
-        const user = authService.currentUser;
-        setUserObj({...user});
+        setNewDisplayName(userObj.displayName);
     }
     return (
         <>

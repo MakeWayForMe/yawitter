@@ -11,7 +11,9 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl}) => {
         const ok = window.confirm("삭제함?");
         if(ok) {
             await deleteDoc(yaweetTextRef);
-            await deleteObject(ref(storageService, yaweetObj.fileUrl));
+            if(fileUrl){
+                await deleteObject(ref(storageService, fileUrl));
+            }
         }
     };
     const toggleEdit = () => setEditing((prev) => !prev);

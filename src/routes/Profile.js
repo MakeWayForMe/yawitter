@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { signOut, updateProfile } from "firebase/auth";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { authService, dbService } from "mybase";
