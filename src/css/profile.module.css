@@ -1,0 +1,20 @@
+.logOutBtn {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+}
+
+.input {
+    padding: 5px;
+}
+
+.name {
+    padding: 5px;
+    border: none;
+    background-color: orange;
+    color: white;
+}

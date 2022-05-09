@@ -1,0 +1,59 @@
+button, input[type=submit] {
+    cursor:pointer;
+}
+
+.authInput {
+    display: block;
+    width: 300px;
+    height: 40px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.loginBtn {
+    width: 300px;
+    height: 30px;
+    border: none;
+    border-radius: 30px;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+}
+
+.toggleBtn {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+}
+
+.error {
+    width: 300px;
+    color: red;
+    font-size: 10px;
+    text-align: center;
+}
+
+.sloginBtn {
+    display: block;
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+.sloginBtn:first-child {
+    background: #4285F4;
+}
+
+.sloginBtn:last-child {
+    background: #24292f;
+}

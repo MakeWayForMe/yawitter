@@ -1,0 +1,104 @@
+.textarea {
+    display: block;
+    width: 500px;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+}
+
+.file {
+    display: block;
+    width: 500px;
+    margin: 10px 0;
+    color: white;
+}
+
+.upload {
+    width: 500px;
+    padding: 5px;
+    border: none;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+}
+
+.reTextarea {
+    display: block;
+    width: 230px;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+}
+
+.reUpload {
+    width: 230px;
+    padding: 5px;
+    border: none;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+}
+
+.yaweetBox {
+    display: flex;
+    position:relative;
+    width: 500px;
+    margin-top: 20px;
+    padding: 30px 10px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.ari {
+    width: 50%;
+}
+
+.nasi {
+    width: 100%;
+}
+
+.writer {
+    margin-bottom: 10px;
+    padding-left: 40px;
+    position:relative;
+}
+
+.writer::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: aqua;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editRemove {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.yaweetBox > div > button {
+    margin-left: 20px;
+    padding: 0 5px;
+    border: none;
+    background-color: transparent;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.date {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
