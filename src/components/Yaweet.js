@@ -29,14 +29,13 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl}) => {
         setNewYaweet(value);
     };
     const writeDate = (time) => {
-        const date = new Date(time*1000);
-        const writeYear = String(date.getFullYear()),
-              writeMonth = String(date.getMonth()),
-              writeDay = String(date.getDate()),
+        const date = new Date((time - 62135596800)*1000);
+        const writeYear = date.getFullYear(),
+              writeMonth = date.getMonth(),
+              writeDay = date.getDate(),
               writeHour = String(date.getHours()).padStart(2, "0"),
               wirteMinute = String(date.getMinutes()).padStart(2, "0");
-        console.log(writeYear);
-        return `${writeYear}년 ${Number(writeMonth) + 1}월 ${writeDay}일 ${writeHour}:${wirteMinute}`;
+        return `${writeYear}년 ${writeMonth + 1}월 ${writeDay}일 ${writeHour}:${wirteMinute}`;
     }
     return (
     <div>
@@ -70,7 +69,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl}) => {
                         <button type="button" onClick={toggleEdit}>수정</button>
                     </div>
                     )}
-                    <p className={yaweetStyle.date}>{writeDate(yaweetObj.createdAt.seconds)}</p>
+                    <p className={yaweetStyle.date}>{writeDate(yaweetObj.createdAt)}</p>
                 </div>
             )
         }
