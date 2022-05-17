@@ -25,3 +25,18 @@
 .li:first-child {
     margin-right: 50px;
 }
+
+@media all and (max-width:640px) {
+    .ul {
+        flex-direction: column;
+    }
+
+    .li {
+        min-height: 42px;
+    }
+
+    .li:first-child {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}

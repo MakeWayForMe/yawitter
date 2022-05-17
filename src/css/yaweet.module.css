@@ -89,7 +89,7 @@
 }
 
 .writer::before {
-    display: flex;
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
@@ -98,30 +98,53 @@
     border-radius: 50%;
     background-color: aqua;
     content: "";
-    justify-content: center;
-    align-items: center;
 }
 
 .editRemove {
     position: absolute;
-    top: 20px;
-    right: calc(50% + 5px);
+    top: 0;
+    right: 20px;
 }
 
 .yaweetBox > div > button {
-    margin-left: 5px;
-    padding: 5px;
+    margin-left: 15px;
+    padding: 3px;
     border: none;
     background-color: transparent;
-    color: #333;
+    color: #a4a4a4;
     font-size: 14px;
 }
 
 .date {
     position: absolute;
-    bottom: 5px;
-    left: 25px;
+    bottom: 3px;
+    right: 20px;
     color: #a4a4a4;
     font-size: 11px;
     font-weight: bold;
+}
+
+@media all and (max-width:640px) {
+    .textarea {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .yaweetBox {
+        width: 94%;
+        margin: 20px auto 0;
+        padding: 20px 10px;
+    }
+
+    .writer {
+        padding-left: 40px;
+    }
+
+    .editRemove {
+        right: 10px;
+    }
+
+    .date {
+        right: 10px;
+    }
 }

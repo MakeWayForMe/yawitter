@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { dbService, storageService } from "mybase";
 import React, { useRef, useState } from "react";

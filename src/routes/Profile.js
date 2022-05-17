@@ -1,5 +1,5 @@
 import { signOut, updateProfile } from "firebase/auth";
-import { collection, doc, getDocs, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { authService, dbService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

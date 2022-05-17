@@ -6,6 +6,7 @@
 
 body {
     background-color: #111111;
+    padding: 20vh 0 50px;
 }
 
 button {
@@ -23,10 +24,10 @@ h4 {
 
 form {
     position:relative;
+    margin: 0 auto;
 }
 
 #root {
-    margin-top: 20vh;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -34,9 +35,14 @@ form {
 
 footer {
     display: flex;
+    justify-content: center;
     align-items: center;
     color: white;
-    height: 70px;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    background-color: #111111;
 }
 
 ::-webkit-scrollbar {
@@ -58,4 +64,20 @@ footer {
 
 ::-webkit-scrollbar-button {
     display: none;
+}
+
+@media all and (max-width:640px) {
+    body {
+        padding-top: 10vh;
+    }
+
+    form {
+        width: 94%;
+    }
+
+    h4 {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
 }
