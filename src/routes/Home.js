@@ -25,7 +25,7 @@ const Home = ({ userObj }) => {
             <YaweetFactory userObj={userObj} />
             <div>
                 {yaweets.map((yaweet) => (
-                    <Yaweet key={yaweet.id} yaweetObj={yaweet} fileUrl={yaweet.fileUrl} isOwner={yaweet.creatorId === userObj.uid} />
+                    <Yaweet key={yaweet.id} yaweetObj={yaweet} fileUrl={yaweet.fileUrl} isOwner={yaweet.creatorId === userObj.uid} ownerName={userObj.displayName} />
                 ))}
             </div>
         </div>

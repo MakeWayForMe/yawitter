@@ -21,6 +21,10 @@ h4 {
     font-weight: 400;
 }
 
+form {
+    position:relative;
+}
+
 #root {
     margin-top: 20vh;
     display: flex;
@@ -33,4 +37,25 @@ footer {
     align-items: center;
     color: white;
     height: 70px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #33333385;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
 }

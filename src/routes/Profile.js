@@ -1,12 +1,14 @@
 import { signOut, updateProfile } from "firebase/auth";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { authService, dbService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import profileStyle from "css/profile.module.css";
+import Yaweet from "components/Yaweet";
 
 const Profile = ({ userObj, refreshUser }) => {
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+    const [myYaweets, setMyYaweets] = useState([]);
     const navigate = useNavigate();
     const onLogOutClick = () => {
         signOut(authService);
@@ -19,6 +21,17 @@ const Profile = ({ userObj, refreshUser }) => {
             orderBy("createdAt", "desc")
         );
         // const querySnapShot = await getDocs(q);
+        // querySnapShot.forEach((doc) => {
+        //     console.log(doc.id, "=>", doc.data());
+        // });
+        onSnapshot(q, (snapshot) => {
+            const myYaweets = snapshot.docs.map((doc) => ({
+                id:doc.id,
+                displayName: doc.displayName,
+                ...doc.data(),
+            }));
+            setMyYaweets(myYaweets);
+        });
     };
     useEffect(() => {
         getMyYaweet();
@@ -41,6 +54,11 @@ const Profile = ({ userObj, refreshUser }) => {
                 <input className={profileStyle.name} type="submit" value="닉네임 수정" />
             </form>
             <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
+            <div>
+                {myYaweets.map((myYaweet) => (
+                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} ownerName={userObj.displayName} />
+                ))}
+            </div>
         </>
     );
 }

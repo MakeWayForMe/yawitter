@@ -4,6 +4,8 @@ import { dbService, storageService } from "mybase";
 import React, { useRef, useState } from "react";
 import { v4 } from "uuid";
 import yaweetStyle from "css/yaweet.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFeatherPointed, faLink } from "@fortawesome/free-solid-svg-icons";
 
 const YaweetFactory = ({userObj}) => {
     const [yaweet, setYaweet] = useState("");
@@ -19,7 +21,7 @@ const YaweetFactory = ({userObj}) => {
             }
             const yaweetObj = {
                 text: yaweet,
-                createdAt: serverTimestamp(),
+                createdAt: Date(),
                 creatorId: userObj.uid,
                 displayName: userObj.displayName,
                 fileUrl
@@ -53,8 +55,9 @@ const YaweetFactory = ({userObj}) => {
     return (
         <form onSubmit={onSubmit}>
             <textarea className={yaweetStyle.textarea} placeholder="내용입력" maxLength="120" value={yaweet} onChange={onChange} />
-            <input className={yaweetStyle.file} type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />
-            <input className={yaweetStyle.upload} type="submit" value="업로드" />
+            <label className={yaweetStyle.file} htmlFor="file"><FontAwesomeIcon icon={faLink} /></label>
+            <input style={{display:'none'}} id="file" type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />
+            <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>
             {file && (
                 <div>
                     <img src={file} alt="" width="250px" />
