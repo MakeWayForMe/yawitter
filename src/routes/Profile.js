@@ -20,10 +20,6 @@ const Profile = ({ userObj, refreshUser }) => {
             where("creatorId", "==", userObj.uid),
             orderBy("createdAt", "desc")
         );
-        // const querySnapShot = await getDocs(q);
-        // querySnapShot.forEach((doc) => {
-        //     console.log(doc.id, "=>", doc.data());
-        // });
         onSnapshot(q, (snapshot) => {
             const myYaweets = snapshot.docs.map((doc) => ({
                 id:doc.id,
@@ -56,7 +52,7 @@ const Profile = ({ userObj, refreshUser }) => {
             <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
             <div>
                 {myYaweets.map((myYaweet) => (
-                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} ownerName={userObj.displayName} />
+                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} />
                 ))}
             </div>
         </>

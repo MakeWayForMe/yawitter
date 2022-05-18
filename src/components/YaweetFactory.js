@@ -5,7 +5,7 @@ import React, { useRef, useState } from "react";
 import { v4 } from "uuid";
 import yaweetStyle from "css/yaweet.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFeatherPointed, faLink } from "@fortawesome/free-solid-svg-icons";
+import { faFeatherPointed, faLink, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const YaweetFactory = ({userObj}) => {
     const [yaweet, setYaweet] = useState("");
@@ -59,9 +59,9 @@ const YaweetFactory = ({userObj}) => {
             <input style={{display:'none'}} id="file" type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />
             <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>
             {file && (
-                <div>
+                <div className={yaweetStyle.img}>
                     <img src={file} alt="" width="250px" />
-                    <button type="button" onClick={fileClear}>취소</button>
+                    <button type="button" onClick={fileClear}><FontAwesomeIcon icon={faXmark} /></button>
                 </div>
             )}
         </form>
