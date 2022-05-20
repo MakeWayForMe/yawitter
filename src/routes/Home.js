@@ -19,7 +19,7 @@ const Home = ({ userObj }) => {
             }));
             setYaweets(yaweetArr);
         });
-    },[])
+    },[]);
     return (
         <div>
             <YaweetFactory userObj={userObj} />

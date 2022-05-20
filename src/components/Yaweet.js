@@ -11,6 +11,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [newYaweet, setNewYaweet] = useState(yaweetObj.text);
     const [newFile, setNewFile] = useState("");
+    const [isImg, setIsImg] = useState(false);
     const yaweetTextRef = doc(dbService, "yaweets", `${yaweetObj.id}`);
     const onDeleteClick = async() => {
         const ok = window.confirm("삭제함?");
@@ -21,7 +22,21 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
             }
         }
     };
-    const toggleEdit = () => setEditing((prev) => !prev);;
+    const editOn = () => {
+        setEditing(true);
+        if(yaweetObj.fileUrl) {
+            setIsImg(true);
+        } else {
+            setIsImg(false);
+        }
+    };
+    const editOff = () => {
+        setEditing(false);
+        setIsImg(false);
+        if(yaweetObj.fileUrl !== fileUrl) {
+            yaweetObj.fileUrl = fileUrl;
+        }
+    };
     const onSubmit = async(event) => {
         event.preventDefault();
         if(yaweetObj.fileUrl || newFile) {
@@ -54,7 +69,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         setNewYaweet(value);
     };
     const writeDate = (time) => {
-        const date = new Date(time);
+        const date = new Date((time - 62135596800)*1000);
         const writeYear = date.getFullYear(),
               writeMonth = date.getMonth(),
               writeDay = date.getDate(),
@@ -62,7 +77,9 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
               wirteMinute = String(date.getMinutes()).padStart(2, "0");
         return `${writeYear}년 ${writeMonth + 1}월 ${writeDay}일 ${writeHour}:${wirteMinute}`;
     };
+    const wroteTime = writeDate(yaweetObj.createdAt);
     const onFileReChange = (event) => {
+        setIsImg(true);
         const theFile = event.target.files[0];
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
@@ -75,6 +92,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         setNewFile("");
         fileInput.current.value = "";
         yaweetObj.fileUrl = "";
+        setIsImg(false);
     };
     return (
     <div>
@@ -82,43 +100,49 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
             editing ? (
                 <div className={yaweetStyle.yaweetBox}>
                     <div className="editing">
-                        <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
+                        <div className={yaweetStyle.insideProfile}>
+                            <img src={yaweetObj.photoURL} alt="프로필이미지" />
+                            <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
+                        </div>
                         <form onSubmit={onSubmit}>
                             <textarea className={yaweetStyle.reTextarea} placeholder="수정할 내용 쓰십쇼" value={newYaweet} required onChange={onChange} />
                             <label className={yaweetStyle.file} htmlFor="reFile"><FontAwesomeIcon icon={faLink} /></label>
                             <input style={{display:'none'}} id="reFile" type="file" accept="image/*" onChange={onFileReChange} ref={fileInput} />
                             <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>
-                            { (yaweetObj.fileUrl, newFile) &&
+                            { isImg &&
                             <div className={yaweetStyle.img}>
-                                { newFile ? <img src={newFile} alt="" /> : <img src={yaweetObj.fileUrl} alt="" />}
+                                { newFile ? <img src={newFile} alt="첨부이미지" /> : <img src={yaweetObj.fileUrl} alt="첨부이미지" />}
                                 <button type="button"><FontAwesomeIcon icon={faXmark} onClick={clearImg} /></button>
                             </div>
                             }
                         </form>
                     </div>
                     <div className={yaweetStyle.editRemove}>
-                        <button type="button" onClick={toggleEdit}><FontAwesomeIcon icon={faXmark} /></button>
+                        <button type="button" onClick={editOff}><FontAwesomeIcon icon={faXmark} /></button>
                     </div>
                 </div>
             )
              : (
                 <div className={yaweetStyle.yaweetBox}>
                     <div className="wrote">
-                        <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
+                        <div className={yaweetStyle.insideProfile}>
+                            <img src={yaweetObj.photoURL} alt="프로필이미지" />
+                            <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
+                        </div>
                         <h4>
                             {yaweetObj.text.split("\n").map((line) => {
                                 return <span key={v4()}>{line}<br /></span>;
                             })}
                         </h4>
                     </div>
-                    { fileUrl && <img src={yaweetObj.fileUrl} alt="" width="49%" /> }
+                    { fileUrl && <img src={yaweetObj.fileUrl} alt="첨부이미지" width="49%" /> }
                     { isOwner && (
                     <div className={yaweetStyle.editRemove}>
                         <button type="button" onClick={onDeleteClick}><FontAwesomeIcon icon={faTrashCan} /></button>
-                        <button type="button" onClick={toggleEdit}><FontAwesomeIcon icon={faPencil} /></button>
+                        <button type="button" onClick={editOn}><FontAwesomeIcon icon={faPencil} /></button>
                     </div>
                     )}
-                    <p className={yaweetStyle.date}>{writeDate(yaweetObj.createdAt)}</p>
+                    <p className={yaweetStyle.date}>{wroteTime}</p>
                 </div>
             )
         }

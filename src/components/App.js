@@ -9,12 +9,16 @@ function App() {
     const [init, setInit] = useState(false);
     const [userObj, setUserObj] = useState(null);
     const [newDisplayName, setNewDisplayName] = useState("");
+    const [newPhotoURL, setNewPhotoURL] = useState("");
     useEffect(() => {
         onAuthStateChanged(authService, (user) => {
         if(user) {
             setUserObj(user);
             if(user.displayName == null) {
                 user.displayName = `사용자 ${v4().slice(0,8)}`;
+            }
+            if(user.photoURL == null) {
+                user.photoURL = `https://myabilitieswa.com.au/wp-content/uploads/2017/06/default-profile-pic-e1513291410505.jpg`;
             }
         } else {
             setUserObj(null);
@@ -24,6 +28,7 @@ function App() {
     },[]);
     const refreshUser = () => {
         setNewDisplayName(userObj.displayName);
+        setNewPhotoURL(userObj.photoURL);
     };
     return (
         <>

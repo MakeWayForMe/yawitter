@@ -1,14 +1,18 @@
 import { signOut, updateProfile } from "firebase/auth";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import { authService, dbService } from "mybase";
+import { collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { authService, dbService, storageService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import profileStyle from "css/profile.module.css";
 import Yaweet from "components/Yaweet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Profile = ({ userObj, refreshUser }) => {
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const [myYaweets, setMyYaweets] = useState([]);
+    const [newPhoto, setNewPhoto] = useState("")
     const navigate = useNavigate();
     const onLogOutClick = () => {
         signOut(authService);
@@ -18,15 +22,15 @@ const Profile = ({ userObj, refreshUser }) => {
         const q = query(
             collection(dbService, "yaweets"),
             where("creatorId", "==", userObj.uid),
-            orderBy("createdAt", "desc")
+            orderBy("createdAt", "asc")
         );
         onSnapshot(q, (snapshot) => {
-            const myYaweets = snapshot.docs.map((doc) => ({
+            const myYaweet = snapshot.docs.map((doc) => ({
                 id:doc.id,
                 displayName: doc.displayName,
                 ...doc.data(),
             }));
-            setMyYaweets(myYaweets);
+            setMyYaweets(myYaweet);
         });
     };
     useEffect(() => {
@@ -39,20 +43,49 @@ const Profile = ({ userObj, refreshUser }) => {
     const onSubmit = async(event) => {
         event.preventDefault();
         if(userObj.displayName !== newDisplayName){
-            await updateProfile(userObj, {displayName: newDisplayName});
+            if(newDisplayName !== "") {
+                await updateProfile(userObj, {displayName: newDisplayName});
+            } else {
+                alert("변경할 닉네임을 입력하세요")
+            }
+        }
+        let photoURL = "";
+        if(newPhoto !== ""){
+            const photoRef = ref(storageService, `${userObj.uid}/profilePhoto`);
+            const response = await uploadString(photoRef, newPhoto, "data_url");
+            photoURL = await getDownloadURL(response.ref);
+            await updateProfile(userObj, {photoURL});
+            myYaweets.forEach((yaweet) => {
+                if(yaweet.photoURL !== photoURL) {
+                    updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL})
+                }
+            });
         }
         refreshUser();
     };
+    const onFileChange = (event) => {
+        const theFile = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = (finishedEvent) => {
+            setNewPhoto(finishedEvent.target.result);
+        };
+        reader.readAsDataURL(theFile);
+    };
     return (
         <>
-            <form onSubmit={onSubmit}>
-                <input className={profileStyle.input} type="text" placeholder="닉네임 입력" value={newDisplayName} onChange={onChange} />
-                <input className={profileStyle.name} type="submit" value="닉네임 수정" />
-            </form>
             <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
+            <form onSubmit={onSubmit}>
+                <div className={profileStyle.profileImg}>
+                    <img src={newPhoto ? newPhoto : userObj.photoURL} alt="프로필" width="100%" />
+                    <label htmlFor="profileImg"><FontAwesomeIcon icon={faPlus} /></label>
+                    <input style={{display:'none'}} id="profileImg" type="file" accept="image/*" onChange={onFileChange} />
+                </div>
+                <input className={profileStyle.name} type="text" placeholder="닉네임 입력" value={newDisplayName} onChange={onChange} />
+                <button className={profileStyle.infoEdit} type="submit" >정보 수정</button>
+            </form>
             <div>
                 {myYaweets.map((myYaweet) => (
-                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} />
+                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} userObj={userObj} />
                 ))}
             </div>
         </>
