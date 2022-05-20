@@ -5,13 +5,14 @@ import React, { useRef, useState } from "react";
 import yaweetStyle from "css/yaweet.module.css";
 import { v4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFeatherPointed, faLink, faPencil, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faFeatherPointed, faLink, faMagnifyingGlass, faPencil, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [editing, setEditing] = useState(false);
     const [newYaweet, setNewYaweet] = useState(yaweetObj.text);
     const [newFile, setNewFile] = useState("");
     const [isImg, setIsImg] = useState(false);
+    const [zoom, setZoom] = useState(false);
     const yaweetTextRef = doc(dbService, "yaweets", `${yaweetObj.id}`);
     const onDeleteClick = async() => {
         const ok = window.confirm("삭제함?");
@@ -36,6 +37,12 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         if(yaweetObj.fileUrl !== fileUrl) {
             yaweetObj.fileUrl = fileUrl;
         }
+    };
+    const zoomIn = () => {
+        setZoom(true);
+    };
+    const zoomOut = () => {
+        setZoom(false);
     };
     const onSubmit = async(event) => {
         event.preventDefault();
@@ -69,7 +76,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         setNewYaweet(value);
     };
     const writeDate = (time) => {
-        const date = new Date((time - 62135596800)*1000);
+        const date = new Date(time);
         const writeYear = date.getFullYear(),
               writeMonth = date.getMonth(),
               writeDay = date.getDate(),
@@ -77,7 +84,6 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
               wirteMinute = String(date.getMinutes()).padStart(2, "0");
         return `${writeYear}년 ${writeMonth + 1}월 ${writeDay}일 ${writeHour}:${wirteMinute}`;
     };
-    const wroteTime = writeDate(yaweetObj.createdAt);
     const onFileReChange = (event) => {
         setIsImg(true);
         const theFile = event.target.files[0];
@@ -124,7 +130,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
             )
              : (
                 <div className={yaweetStyle.yaweetBox}>
-                    <div className="wrote">
+                    <div>
                         <div className={yaweetStyle.insideProfile}>
                             <img src={yaweetObj.photoURL} alt="프로필이미지" />
                             <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
@@ -135,14 +141,25 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                             })}
                         </h4>
                     </div>
-                    { fileUrl && <img src={yaweetObj.fileUrl} alt="첨부이미지" width="49%" /> }
+                    { fileUrl && (
+                    <div className={yaweetStyle.wroteFile}>
+                        <img src={yaweetObj.fileUrl} alt="첨부이미지" />
+                        <button type="button" onClick={zoomIn}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
+                    </div>
+                    )}
                     { isOwner && (
                     <div className={yaweetStyle.editRemove}>
                         <button type="button" onClick={onDeleteClick}><FontAwesomeIcon icon={faTrashCan} /></button>
                         <button type="button" onClick={editOn}><FontAwesomeIcon icon={faPencil} /></button>
                     </div>
                     )}
-                    <p className={yaweetStyle.date}>{wroteTime}</p>
+                    <p className={yaweetStyle.date}>{writeDate(yaweetObj.createdAt)}</p>
+                    { zoom && (
+                    <div className={yaweetStyle.zoom}>
+                        <img src={yaweetObj.fileUrl} />
+                        <button type="button" onClick={zoomOut}><FontAwesomeIcon icon={faXmark} /></button>
+                    </div>
+                    )}
                 </div>
             )
         }

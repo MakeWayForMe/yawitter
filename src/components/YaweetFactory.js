@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { dbService, storageService } from "mybase";
 import React, { useRef, useState } from "react";
@@ -21,7 +21,7 @@ const YaweetFactory = ({userObj}) => {
             }
             const yaweetObj = {
                 text: yaweet,
-                createdAt: serverTimestamp(),
+                createdAt: Date.now(),
                 creatorId: userObj.uid,
                 displayName: userObj.displayName,
                 photoURL: userObj.photoURL,

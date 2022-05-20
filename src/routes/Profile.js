@@ -1,5 +1,5 @@
-import { signOut, updateProfile } from "firebase/auth";
-import { collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { deleteUser, signOut, updateProfile } from "firebase/auth";
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { authService, dbService, storageService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import profileStyle from "css/profile.module.css";
 import Yaweet from "components/Yaweet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Profile = ({ userObj, refreshUser }) => {
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
@@ -18,11 +18,18 @@ const Profile = ({ userObj, refreshUser }) => {
         signOut(authService);
         navigate("/");
     };
+    const onAuthDelete = async() => {
+        const ok = window.confirm("진짜 탈퇴함? 글은 삭제안됨");
+        if(ok) {
+            await deleteUser(authService.currentUser);
+            navigate("/");
+        }
+    };
     const getMyYaweet = async() => {
         const q = query(
             collection(dbService, "yaweets"),
             where("creatorId", "==", userObj.uid),
-            orderBy("createdAt", "asc")
+            orderBy("createdAt", "desc")
         );
         onSnapshot(q, (snapshot) => {
             const myYaweet = snapshot.docs.map((doc) => ({
@@ -38,13 +45,18 @@ const Profile = ({ userObj, refreshUser }) => {
     }, [])
     const onChange = (event) => {
         const {value} = event.target;
-        setNewDisplayName(value);
-    }
+        if(value.length <= 10) {
+            setNewDisplayName(value);
+        }
+    };
     const onSubmit = async(event) => {
         event.preventDefault();
         if(userObj.displayName !== newDisplayName){
             if(newDisplayName !== "") {
                 await updateProfile(userObj, {displayName: newDisplayName});
+                myYaweets.forEach((yaweet) => {
+                    updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {displayName: newDisplayName});
+                });
             } else {
                 alert("변경할 닉네임을 입력하세요")
             }
@@ -56,9 +68,7 @@ const Profile = ({ userObj, refreshUser }) => {
             photoURL = await getDownloadURL(response.ref);
             await updateProfile(userObj, {photoURL});
             myYaweets.forEach((yaweet) => {
-                if(yaweet.photoURL !== photoURL) {
-                    updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL})
-                }
+                updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL});
             });
         }
         refreshUser();
@@ -73,7 +83,6 @@ const Profile = ({ userObj, refreshUser }) => {
     };
     return (
         <>
-            <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
             <form onSubmit={onSubmit}>
                 <div className={profileStyle.profileImg}>
                     <img src={newPhoto ? newPhoto : userObj.photoURL} alt="프로필" width="100%" />
@@ -82,6 +91,8 @@ const Profile = ({ userObj, refreshUser }) => {
                 </div>
                 <input className={profileStyle.name} type="text" placeholder="닉네임 입력" value={newDisplayName} onChange={onChange} />
                 <button className={profileStyle.infoEdit} type="submit" >정보 수정</button>
+                <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
+                <button className={profileStyle.authDelete} type="button" onClick={onAuthDelete}>회원탈퇴</button>
             </form>
             <div>
                 {myYaweets.map((myYaweet) => (

@@ -9,7 +9,6 @@ function App() {
     const [init, setInit] = useState(false);
     const [userObj, setUserObj] = useState(null);
     const [newDisplayName, setNewDisplayName] = useState("");
-    const [newPhotoURL, setNewPhotoURL] = useState("");
     useEffect(() => {
         onAuthStateChanged(authService, (user) => {
         if(user) {
@@ -28,7 +27,6 @@ function App() {
     },[]);
     const refreshUser = () => {
         setNewDisplayName(userObj.displayName);
-        setNewPhotoURL(userObj.photoURL);
     };
     return (
         <>

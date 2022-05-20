@@ -9,7 +9,7 @@ const Navigation = ({userObj}) => (
                 <Link to="/" className={navStyle.a}>홈</Link>
             </li>
             <li className={navStyle.li}>
-                <Link to="/profile" className={navStyle.a}>{userObj.displayName}'s<br />프로필</Link>
+                <Link to="/profile" className={navStyle.a}>{userObj.displayName}의 프로필</Link>
             </li>
         </ul>
     </nav>
