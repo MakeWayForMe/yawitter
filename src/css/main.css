@@ -6,7 +6,6 @@
 
 body {
     background-color: #111111;
-    padding-top: 50px;
 }
 
 button {
@@ -39,12 +38,12 @@ form {
 
 footer {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
     width: 100%;
     height: 50px;
     background-color: #111111;
+    color: white;
+    justify-content: center;
+    align-items: center;
 }
 
 ::-webkit-scrollbar {
@@ -56,8 +55,8 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #33333385;
     border-radius: 5px;
+    background: #33333385;
 }
 
 ::-webkit-scrollbar-thumb:hover {

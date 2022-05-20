@@ -1,3 +1,7 @@
+.yaweetArea {
+    margin-top: 200px;
+}
+
 .textarea {
     display: block;
     width: 500px;
@@ -134,6 +138,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .wroteFile {
@@ -186,6 +191,11 @@
 }
 
 @media all and (max-width:640px) {
+    .yaweetArea {
+        margin-top: 50px;
+        width: 94%;
+    }
+
     .textarea {
         width: 100%;
         font-size: 12px;
@@ -198,11 +208,7 @@
     .yaweetBox {
         width: 94%;
         margin: 20px auto 0;
-        padding: 20px 10px;
-    }
-
-    .writer {
-        padding-left: 40px;
+        padding: 20px;
     }
 
     .date {

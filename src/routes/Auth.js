@@ -17,7 +17,7 @@ const Auth = () => {
     };
 
     return (
-        <div>
+        <div className={loginStyle.loginform}>
             <AuthForm />
             <div>
                 <button className={loginStyle.sloginBtn} type="button" name="google" onClick={onSocialClick}>구글 계정으로 로그인</button>

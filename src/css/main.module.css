@@ -24,8 +24,7 @@ button, input[type=submit] {
 
 .toggleBtn {
     display: block;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto;
     border: none;
     background-color: transparent;
     color: white;
@@ -56,4 +55,11 @@ button, input[type=submit] {
 
 .sloginBtn:last-child {
     background: #24292f;
+}
+
+.loginform {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

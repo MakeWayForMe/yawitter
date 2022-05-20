@@ -3,6 +3,7 @@ import YaweetFactory from "components/YaweetFactory";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { dbService } from "mybase";
 import React, { useEffect, useState } from "react";
+import yaweetStyle from "css/yaweet.module.css";
 
 const Home = ({ userObj }) => {
     const [yaweets, setYaweets] = useState([]);
@@ -21,7 +22,7 @@ const Home = ({ userObj }) => {
         });
     },[]);
     return (
-        <div>
+        <div className={yaweetStyle.yaweetArea}>
             <YaweetFactory userObj={userObj} />
             <div>
                 {yaweets.map((yaweet) => (
