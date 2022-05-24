@@ -54,7 +54,7 @@ const YaweetFactory = ({userObj}) => {
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className={yaweetStyle.form}>
             <textarea className={yaweetStyle.textarea} placeholder="내용입력" maxLength="120" value={yaweet} onChange={onChange} />
             <label className={yaweetStyle.file} htmlFor="file"><FontAwesomeIcon icon={faLink} /></label>
             <input style={{display:'none'}} id="file" type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />

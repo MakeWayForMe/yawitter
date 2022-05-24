@@ -5,7 +5,12 @@
 }
 
 body {
-    background-color: #111111;
+    background-color: #121212;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 button {
@@ -70,10 +75,6 @@ footer {
 @media all and (max-width:640px) {
     body {
         padding-top: 10vh;
-    }
-
-    form {
-        width: 94%;
     }
 
     h4 {

@@ -6,6 +6,7 @@ import yaweetStyle from "css/yaweet.module.css";
 import { v4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFeatherPointed, faLink, faMagnifyingGlass, faPencil, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [editing, setEditing] = useState(false);
@@ -131,10 +132,12 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
              : (
                 <div className={yaweetStyle.yaweetBox}>
                     <div>
-                        <div className={yaweetStyle.insideProfile}>
-                            <img src={yaweetObj.photoURL} alt="프로필이미지" />
-                            <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
-                        </div>
+                        <Link to={userObj.uid === yaweetObj.creatorId ? "/profile" : `/profile/${yaweetObj.creatorId}`} state={{yaweetObj:yaweetObj}}>
+                            <div className={yaweetStyle.insideProfile}>
+                                <img src={yaweetObj.photoURL} alt="프로필이미지" />
+                                <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
+                            </div>
+                        </Link>
                         <h4>
                             {yaweetObj.text.split("\n").map((line) => {
                                 return <span key={v4()}>{line}<br /></span>;

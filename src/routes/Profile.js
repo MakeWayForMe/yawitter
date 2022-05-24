@@ -1,5 +1,5 @@
 import { deleteUser, signOut, updateProfile } from "firebase/auth";
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { authService, dbService, storageService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import profileStyle from "css/profile.module.css";
 import Yaweet from "components/Yaweet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { deleteObject, getDownloadURL, ref, uploadString } from "firebase/storage";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const Profile = ({ userObj, refreshUser }) => {
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
@@ -83,7 +83,7 @@ const Profile = ({ userObj, refreshUser }) => {
     };
     return (
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className={profileStyle.form}>
                 <div className={profileStyle.profileImg}>
                     <img src={newPhoto ? newPhoto : userObj.photoURL} alt="프로필" width="100%" />
                     <label htmlFor="profileImg"><FontAwesomeIcon icon={faPlus} /></label>
