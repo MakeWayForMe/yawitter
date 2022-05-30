@@ -30,7 +30,12 @@ function App() {
     };
     return (
         <>
-        {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} /> : "로딩중..."}
+        {init ? (
+            <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
+            ) : (
+            <img className="loading" src={process.env.PUBLIC_URL + '/img/loading.gif'} alt="로딩중" />
+            )
+        }
         <footer>&copy; {new Date().getFullYear()} Yawitter</footer>
         </>
     );

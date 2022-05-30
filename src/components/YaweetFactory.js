@@ -25,7 +25,8 @@ const YaweetFactory = ({userObj}) => {
                 creatorId: userObj.uid,
                 displayName: userObj.displayName,
                 photoURL: userObj.photoURL,
-                fileUrl
+                fileUrl,
+                like: []
             };
             await addDoc(collection(dbService, "yaweets"), yaweetObj);
             setYaweet("");
@@ -37,7 +38,9 @@ const YaweetFactory = ({userObj}) => {
     };
     const onChange = (event) => {
         const { value } = event.target;
-        setYaweet(value);
+        if(value.length <= 200) {
+            setYaweet(value);
+        }
     };
     const onFileChange = (event) => {
         const theFile = event.target.files[0];
@@ -55,7 +58,7 @@ const YaweetFactory = ({userObj}) => {
 
     return (
         <form onSubmit={onSubmit} className={yaweetStyle.form}>
-            <textarea className={yaweetStyle.textarea} placeholder="내용입력" maxLength="120" value={yaweet} onChange={onChange} />
+            <textarea className={yaweetStyle.textarea} placeholder="내용입력" value={yaweet} onChange={onChange} />
             <label className={yaweetStyle.file} htmlFor="file"><FontAwesomeIcon icon={faLink} /></label>
             <input style={{display:'none'}} id="file" type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />
             <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>
@@ -65,6 +68,7 @@ const YaweetFactory = ({userObj}) => {
                     <button type="button" onClick={fileClear}><FontAwesomeIcon icon={faXmark} /></button>
                 </div>
             )}
+            <p className={yaweetStyle.length}>({yaweet.length}/200)</p>
         </form>
     );
 };

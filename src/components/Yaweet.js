@@ -7,6 +7,8 @@ import { v4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFeatherPointed, faLink, faMagnifyingGlass, faPencil, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { faHeart as unLike } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as Liked } from "@fortawesome/free-solid-svg-icons";
 
 const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [editing, setEditing] = useState(false);
@@ -35,6 +37,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const editOff = () => {
         setEditing(false);
         setIsImg(false);
+        setNewYaweet(yaweetObj.text);
         if(yaweetObj.fileUrl !== fileUrl) {
             yaweetObj.fileUrl = fileUrl;
         }
@@ -74,7 +77,9 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     };
     const onChange = (event) => {
         const { value } = event.target;
-        setNewYaweet(value);
+        if(value.length <= 200) {
+            setNewYaweet(value);
+        }
     };
     const writeDate = (time) => {
         const date = new Date(time);
@@ -101,6 +106,14 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         yaweetObj.fileUrl = "";
         setIsImg(false);
     };
+    const onLike = () => {
+        const likeList = yaweetObj.like;
+        if(likeList.includes(userObj.uid)) {
+            updateDoc(yaweetTextRef, {like: likeList.filter(list => list !== userObj.uid)});
+        } else {
+            updateDoc(yaweetTextRef, {like: [userObj.uid, ...likeList]});
+        }
+    };
     return (
     <div>
         {
@@ -122,6 +135,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                                 <button type="button"><FontAwesomeIcon icon={faXmark} onClick={clearImg} /></button>
                             </div>
                             }
+                            <p className={yaweetStyle.length}>({newYaweet.length}/200)</p>
                         </form>
                     </div>
                     <div className={yaweetStyle.editRemove}>
@@ -150,6 +164,9 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                         <button type="button" onClick={zoomIn}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                     </div>
                     )}
+                    <div className={yaweetStyle.like}>
+                        <button type="button" onClick={onLike}>{yaweetObj.like.includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button><span>{yaweetObj.like.length}</span>
+                    </div>
                     { isOwner && (
                     <div className={yaweetStyle.editRemove}>
                         <button type="button" onClick={onDeleteClick}><FontAwesomeIcon icon={faTrashCan} /></button>
