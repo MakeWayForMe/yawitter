@@ -89,6 +89,7 @@ const Profile = ({ userObj, refreshUser }) => {
                     <label htmlFor="profileImg"><FontAwesomeIcon icon={faPlus} /></label>
                     <input style={{display:'none'}} id="profileImg" type="file" accept="image/*" onChange={onFileChange} />
                 </div>
+                <p style={{color:"white", textAlign:"center"}}>{userObj.email}</p>
                 <input className={profileStyle.name} type="text" placeholder="닉네임 입력" value={newDisplayName} onChange={onChange} />
                 <button className={profileStyle.infoEdit} type="submit" >정보 수정</button>
                 <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
@@ -96,7 +97,7 @@ const Profile = ({ userObj, refreshUser }) => {
             </form>
             <div>
                 {myYaweets.map((myYaweet) => (
-                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} userObj={userObj} />
+                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} userObj={userObj} isOwner={true} />
                 ))}
             </div>
         </>

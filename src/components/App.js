@@ -14,7 +14,7 @@ function App() {
         if(user) {
             setUserObj(user);
             if(user.displayName == null) {
-                user.displayName = `사용자 ${v4().slice(0,8)}`;
+                user.displayName = `사용자 ${v4().slice(0,5)}`;
             }
             if(user.photoURL == null) {
                 user.photoURL = `https://myabilitieswa.com.au/wp-content/uploads/2017/06/default-profile-pic-e1513291410505.jpg`;

@@ -146,7 +146,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
              : (
                 <div className={yaweetStyle.yaweetBox}>
                     <div>
-                        <Link to={userObj.uid === yaweetObj.creatorId ? "/profile" : `/profile/${yaweetObj.creatorId}`} state={{yaweetObj:yaweetObj}}>
+                        <Link to={userObj.uid === yaweetObj.creatorId ? "/profile" : `/profile/${yaweetObj.creatorId}`} state={{yaweetObj}}>
                             <div className={yaweetStyle.insideProfile}>
                                 <img src={yaweetObj.photoURL} alt="프로필이미지" />
                                 <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>

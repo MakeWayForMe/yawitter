@@ -5,7 +5,7 @@ import { collection, onSnapshot, orderBy, query, where } from "firebase/firestor
 import Yaweet from "components/Yaweet";
 import { dbService } from "mybase";
 
-const OtherProfile = () => {
+const OtherProfile = ({userObj}) => {
     const data = useLocation();
     const yaweetObj = data.state.yaweetObj;
     const [yaweets, setYaweets] = useState([]);
@@ -37,7 +37,7 @@ const OtherProfile = () => {
             </div>
             <div>
                 {yaweets.map((yaweet) => (
-                    <Yaweet key={yaweet.id} yaweetObj={yaweet} fileUrl={yaweet.fileUrl} userObj={yaweetObj} />
+                    <Yaweet key={yaweet.id} yaweetObj={yaweet} fileUrl={yaweet.fileUrl} userObj={userObj} />
                 ))}
             </div>
         </>
