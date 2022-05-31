@@ -17,7 +17,7 @@ function App() {
                 user.displayName = `사용자 ${v4().slice(0,5)}`;
             }
             if(user.photoURL == null) {
-                user.photoURL = `https://myabilitieswa.com.au/wp-content/uploads/2017/06/default-profile-pic-e1513291410505.jpg`;
+                user.photoURL = "https://firebasestorage.googleapis.com/v0/b/yawitter.appspot.com/o/default_profile_pic.jpg?alt=media&token=1bcf6cc5-b9f0-49d9-b80f-6e87ca32e3ef";
             }
         } else {
             setUserObj(null);

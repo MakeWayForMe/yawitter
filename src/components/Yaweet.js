@@ -16,6 +16,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [newFile, setNewFile] = useState("");
     const [isImg, setIsImg] = useState(false);
     const [zoom, setZoom] = useState(false);
+    const [likelist, setLikelist] = useState(false);
     const yaweetTextRef = doc(dbService, "yaweets", `${yaweetObj.id}`);
     const onDeleteClick = async() => {
         const ok = window.confirm("삭제함?");
@@ -108,11 +109,15 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     };
     const onLike = () => {
         const likeList = yaweetObj.like;
-        if(likeList.includes(userObj.uid)) {
-            updateDoc(yaweetTextRef, {like: likeList.filter(list => list !== userObj.uid)});
+        const uidList = likeList.map((list) => list.uid)
+        if(uidList.includes(userObj.uid)) {
+            updateDoc(yaweetTextRef, {like: likeList.filter(list => list.uid !== userObj.uid)});
         } else {
-            updateDoc(yaweetTextRef, {like: [userObj.uid, ...likeList]});
+            updateDoc(yaweetTextRef, {like: [{name: userObj.displayName, photo:userObj.photoURL, uid:userObj.uid}, ...likeList]});
         }
+    };
+    const toggleLikelist = () => {
+        setLikelist((prev) => !prev);
     };
     return (
     <div>
@@ -158,15 +163,25 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                             })}
                         </h4>
                     </div>
+                    <div className={yaweetStyle.like}>
+                        <button type="button" onClick={onLike}>{yaweetObj.like.map((list) => list.uid).includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button><span onClick={toggleLikelist}>{yaweetObj.like.length} 좋아요</span>
+                    </div>
+                    { likelist &&
+                    <div className={yaweetStyle.likelist}>
+                        <button type="button" onClick={toggleLikelist}><FontAwesomeIcon icon={faXmark} /></button>
+                        <ul>
+                            {yaweetObj.like.map((list) => (
+                                <li key={list.uid}><img src={list.photo} alt="프로필사진" />{list.name}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    }
                     { fileUrl && (
                     <div className={yaweetStyle.wroteFile}>
                         <img src={yaweetObj.fileUrl} alt="첨부이미지" />
                         <button type="button" onClick={zoomIn}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                     </div>
                     )}
-                    <div className={yaweetStyle.like}>
-                        <button type="button" onClick={onLike}>{yaweetObj.like.includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button><span>{yaweetObj.like.length}</span>
-                    </div>
                     { isOwner && (
                     <div className={yaweetStyle.editRemove}>
                         <button type="button" onClick={onDeleteClick}><FontAwesomeIcon icon={faTrashCan} /></button>

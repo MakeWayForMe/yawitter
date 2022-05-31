@@ -53,7 +53,7 @@ const Profile = ({ userObj, refreshUser }) => {
         event.preventDefault();
         if(userObj.displayName !== newDisplayName){
             if(newDisplayName !== "") {
-                await updateProfile(userObj, {displayName: newDisplayName});
+                await updateProfile(userObj, {displayName: newDisplayName, photoURL:userObj.photoURL});
                 myYaweets.forEach((yaweet) => {
                     updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {displayName: newDisplayName});
                 });
@@ -61,11 +61,10 @@ const Profile = ({ userObj, refreshUser }) => {
                 alert("변경할 닉네임을 입력하세요")
             }
         }
-        let photoURL = "";
         if(newPhoto !== ""){
             const photoRef = ref(storageService, `${userObj.uid}/profilePhoto`);
             const response = await uploadString(photoRef, newPhoto, "data_url");
-            photoURL = await getDownloadURL(response.ref);
+            const photoURL = await getDownloadURL(response.ref);
             await updateProfile(userObj, {photoURL});
             myYaweets.forEach((yaweet) => {
                 updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL});
