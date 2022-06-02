@@ -65,7 +65,7 @@ const Profile = ({ userObj, refreshUser }) => {
             const photoRef = ref(storageService, `${userObj.uid}/profilePhoto`);
             const response = await uploadString(photoRef, newPhoto, "data_url");
             const photoURL = await getDownloadURL(response.ref);
-            await updateProfile(userObj, {photoURL});
+            await updateProfile(userObj, {displayName: userObj.displayName, photoURL});
             myYaweets.forEach((yaweet) => {
                 updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL});
             });
@@ -88,11 +88,13 @@ const Profile = ({ userObj, refreshUser }) => {
                     <label htmlFor="profileImg"><FontAwesomeIcon icon={faPlus} /></label>
                     <input style={{display:'none'}} id="profileImg" type="file" accept="image/*" onChange={onFileChange} />
                 </div>
-                <p style={{color:"white", textAlign:"center"}}>{userObj.email}</p>
+                <p className={profileStyle.email}>{userObj.email}</p>
                 <input className={profileStyle.name} type="text" placeholder="닉네임 입력" value={newDisplayName} onChange={onChange} />
-                <button className={profileStyle.infoEdit} type="submit" >정보 수정</button>
-                <button className={profileStyle.logOutBtn} type="button" onClick={onLogOutClick}>로그아웃</button>
-                <button className={profileStyle.authDelete} type="button" onClick={onAuthDelete}>회원탈퇴</button>
+                <button className={profileStyle.submit} type="submit" >정보 수정</button>
+                <div className={profileStyle.buttons}>
+                    <button type="button" onClick={onLogOutClick}>로그아웃</button>
+                    <button type="button" onClick={onAuthDelete}>회원탈퇴</button>
+                </div>
             </form>
             <div>
                 {myYaweets.map((myYaweet) => (

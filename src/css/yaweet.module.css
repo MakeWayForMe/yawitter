@@ -1,5 +1,5 @@
-.yaweetArea > img {
-    width: 100%;
+.yaweetArea {
+    margin-top: 100px;
 }
 
 .textarea {
@@ -36,7 +36,7 @@
     height: 90px;
     padding: 5px;
     border: none;
-    background-color: #fa7100;
+    background-color: #F8D075;
     color: #333;
     font-size: 20px;
     font-weight: bold;
@@ -79,6 +79,7 @@
     right: 54px;
     bottom: 10px;
     color: #a4a4a4;
+    font-size: 14px;
 }
 
 .reTextarea {
@@ -106,10 +107,15 @@
     justify-content: space-between;
 }
 
+.yaweetBox p span {
+    font-size: 14px;
+}
+
 .writer {
     position:relative;
     margin-bottom: 15px;
     padding-left: 10px;
+    font-size: 18px;
     line-height: 30px;
 }
 
@@ -250,31 +256,31 @@
 }
 
 .likelist ul {
-    background-color: white;
-    border-radius: 10px;
     width: 300px;
-    padding: 10px;
-    min-height: 100px;
     max-height: 300px;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
     overflow-y: auto;
 }
 
 .likelist ul li {
     display: flex;
-    align-items: center;
-    list-style: none;
+    margin-bottom: 10px;
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
+    align-items: center;
+    list-style: none;
 }
 
 .likelist ul li img {
     display: block;
     width: 30px;
     height: 30px;
-    object-fit: cover;
-    border-radius: 50%;
     margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 @media all and (max-width:640px) {

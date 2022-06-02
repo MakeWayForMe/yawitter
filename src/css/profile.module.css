@@ -6,53 +6,53 @@
     border: none;
     border-radius: 15px;
     background-color: white;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     outline: none;
+}
+
+.email {
+    text-align: center;
 }
 
 .form {
     margin-top: 20px;
 }
 
-.infoEdit {
+.form .buttons {
+    position: absolute;
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+}
+
+.form .buttons button {
+    padding: 5px 10px;
+    background-color: #F8D075;
+    border-radius: 3px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.submit {
     display: block;
     margin: 0 auto;
-    padding: 5px;
-    border: none;
+    padding: 5px 10px;
+    background-color: #F8D075;
     border-radius: 3px;
-    background-color: orange;
-    color: white;
-}
-
-.logOutBtn {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
     border: none;
-    background-color: transparent;
-    color: white;
-    text-decoration: underline;
-}
-
-.authDelete {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    background-color: transparent;
-    color: white;
-    text-decoration: underline;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .profileImg {
     display: flex;
     position:relative;
     width: 250px;
-    justify-content: center;
     margin-bottom: 10px;
+    justify-content: center;
 }
 
 .profileImg img {
@@ -72,8 +72,8 @@
     height: 30px;
     border: none;
     border-radius: 50%;
-    background-color: #333;
-    color: #ccc;
+    background-color: #FCED6A;
+    color: #333;
     font-size: 20px;
     box-shadow: 0 0 2px #a4a4a4;
     justify-content: center;

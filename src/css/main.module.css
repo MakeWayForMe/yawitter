@@ -17,8 +17,8 @@ button, input[type=submit] {
     height: 30px;
     border: none;
     border-radius: 30px;
-    background-color: orange;
-    color: white;
+    background: #f0db7d;
+    box-shadow: 0 0 5px #BAB499;
     font-weight: bold;
 }
 
@@ -27,7 +27,6 @@ button, input[type=submit] {
     margin: 20px auto;
     border: none;
     background-color: transparent;
-    color: white;
     text-decoration: underline;
 }
 
@@ -47,6 +46,7 @@ button, input[type=submit] {
     border-radius: 40px;
     color: white;
     font-weight: bold;
+    position:relative;
 }
 
 .sloginBtn:first-child {

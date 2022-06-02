@@ -16,15 +16,19 @@
     display: table-cell;
     width: 300px;
     height: 40px;
-    background-color: #2b2222;
-    color: white;
+    border-radius: 20px;
+    background-color: #f0db7d;
+    font-family: 'Single Day', cursive;
+    font-size: 20px;
+    font-weight: bold;
     text-decoration: none;
     text-align: center;
     vertical-align: middle;
+    box-shadow: 2px 2px 0 #BAB499;
 }
 
 .li:first-child {
-    margin-right: 50px;
+    margin-right: 200px;
 }
 
 @media all and (max-width:640px) {

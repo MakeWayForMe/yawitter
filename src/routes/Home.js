@@ -23,7 +23,6 @@ const Home = ({ userObj }) => {
     },[]);
     return (
         <div className={yaweetStyle.yaweetArea}>
-            <img src={process.env.PUBLIC_URL + '/img/logo.png'} alt="로고" />
             <YaweetFactory userObj={userObj} />
             <div>
                 {yaweets.map((yaweet) => (

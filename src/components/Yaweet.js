@@ -157,11 +157,11 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                                 <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
                             </div>
                         </Link>
-                        <h4>
+                        <p>
                             {yaweetObj.text.split("\n").map((line) => {
                                 return <span key={v4()}>{line}<br /></span>;
                             })}
-                        </h4>
+                        </p>
                     </div>
                     <div className={yaweetStyle.like}>
                         <button type="button" onClick={onLike}>{yaweetObj.like.map((list) => list.uid).includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button><span onClick={toggleLikelist}>{yaweetObj.like.length} 좋아요</span>
