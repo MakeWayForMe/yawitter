@@ -33,7 +33,7 @@ const YaweetFactory = ({userObj}) => {
             setFile("");
             fileInput.current.value = "";
         } else {
-            alert("내용을 작성하셔야죠?")
+            alert("내용을 입력해주세요")
         }
     };
     const onChange = (event) => {
@@ -58,7 +58,7 @@ const YaweetFactory = ({userObj}) => {
 
     return (
         <form onSubmit={onSubmit} className={yaweetStyle.form}>
-            <textarea className={yaweetStyle.textarea} placeholder="내용입력" value={yaweet} onChange={onChange} />
+            <textarea className={yaweetStyle.textarea} placeholder="오늘은 무슨 일이 있었나요?" value={yaweet} onChange={onChange} />
             <label className={yaweetStyle.file} htmlFor="file"><FontAwesomeIcon icon={faLink} /></label>
             <input style={{display:'none'}} id="file" type="file" accept="image/*" onChange={onFileChange} ref={fileInput} />
             <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>

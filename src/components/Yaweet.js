@@ -19,7 +19,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
     const [likelist, setLikelist] = useState(false);
     const yaweetTextRef = doc(dbService, "yaweets", `${yaweetObj.id}`);
     const onDeleteClick = async() => {
-        const ok = window.confirm("삭제함?");
+        const ok = window.confirm("피드를 삭제하시겠습니까? 삭제한 피드는 복원할 수 없습니다.");
         if(ok) {
             await deleteDoc(yaweetTextRef);
             if(fileUrl){
@@ -130,7 +130,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                             <h2 className={yaweetStyle.writer}>{yaweetObj.displayName}</h2>
                         </div>
                         <form onSubmit={onSubmit}>
-                            <textarea className={yaweetStyle.reTextarea} placeholder="수정할 내용 쓰십쇼" value={newYaweet} required onChange={onChange} />
+                            <textarea className={yaweetStyle.reTextarea} placeholder="수정할 내용을 입력해주세요" value={newYaweet} required onChange={onChange} />
                             <label className={yaweetStyle.file} htmlFor="reFile"><FontAwesomeIcon icon={faLink} /></label>
                             <input style={{display:'none'}} id="reFile" type="file" accept="image/*" onChange={onFileReChange} ref={fileInput} />
                             <button className={yaweetStyle.upload} type="submit"><FontAwesomeIcon icon={faFeatherPointed} /></button>
