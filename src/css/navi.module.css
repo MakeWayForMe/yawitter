@@ -43,6 +43,7 @@
     box-shadow: 2px 2px 0 #BAB499;
     opacity:0;
     transition: opacity 200ms ease-in-out;
+    z-index:20;
 }
 
 .show {
@@ -58,4 +59,11 @@
         margin-right: 0;
         margin-bottom: 10px;
     }
+
+    .toUp {
+        bottom: 20px;
+        right: 20px;
+        border-radius: 50%;
+    }
+
 }
