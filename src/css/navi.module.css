@@ -31,6 +31,24 @@
     margin-right: 200px;
 }
 
+.toUp {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+    background-color: #f0db7d;
+    border: none;
+    color: #111;
+    box-shadow: 2px 2px 0 #BAB499;
+    opacity:0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.show {
+    opacity:1;
+}
+
 @media all and (max-width:640px) {
     .ul {
         flex-direction: column;

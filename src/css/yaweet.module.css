@@ -236,11 +236,12 @@
 .likelist {
     display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 30;
-    width: 100%;
-    height: 100%;
+    width: 500px;
+    height: 500px;
     background-color: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
@@ -248,8 +249,8 @@
 
 .likelist button {
     position: absolute;
-    top: 150px;
-    right: calc(50% - 250px);
+    top: 15px;
+    right: 15px;
     border: none;
     background-color: transparent;
     color: white;
