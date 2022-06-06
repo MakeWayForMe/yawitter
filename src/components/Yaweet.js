@@ -164,7 +164,8 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                         </p>
                     </div>
                     <div className={yaweetStyle.like}>
-                        <button type="button" onClick={onLike}>{yaweetObj.like.map((list) => list.uid).includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button><span onClick={toggleLikelist}>{yaweetObj.like.length} 좋아요</span>
+                        <button type="button" onClick={onLike}>{yaweetObj.like.map((list) => list.uid).includes(userObj.uid) ? <FontAwesomeIcon icon={Liked} /> : <FontAwesomeIcon icon={unLike} />}</button>
+                        { yaweetObj.like.length > 0 && <span onClick={toggleLikelist}>{yaweetObj.like.length} 좋아요</span>}
                     </div>
                     { likelist &&
                     <div className={yaweetStyle.likelist}>
