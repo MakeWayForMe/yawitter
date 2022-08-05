@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Single+Day&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+body {
+    background: url(../../public/img/Untitled-1.jpg);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor:pointer;
+}
+
+h2 {
+    font-family: 'Single Day', cursive;
+}
+
+form {
+    position:relative;
+    margin: 0 auto;
+}
+
+#root {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.editing {
+    width: 100%;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    /* color: white; */
+    justify-content: center;
+    align-items: center;
+}
+
+img.loading {
+    margin-top: 50vh;
+    transform: translateY(-50%);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #33333385;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+@media all and (max-width:640px) {
+    h4 {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+}
