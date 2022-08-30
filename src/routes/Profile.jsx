@@ -75,6 +75,7 @@ const Profile = ({ userObj, refreshUser }) => {
                     myYaweets.forEach((yaweet) => {
                         updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {displayName: newDisplayName});
                     });
+                    setComplete(true);
                 } else {
                     alert("변경할 닉네임을 입력하세요")
                 }
@@ -87,9 +88,9 @@ const Profile = ({ userObj, refreshUser }) => {
                 myYaweets.forEach((yaweet) => {
                     updateDoc(doc(dbService, "yaweets",`${yaweet.id}`), {photoURL});
                 });
+                setComplete(true);
             }
             refreshUser();
-            setComplete(true);
         } else {
             setComplete(false);
         }
