@@ -13,7 +13,7 @@ const Home = ({ userObj }) => {
         const scrollTop = document.documentElement.scrollTop;
         const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - 100) {
           setNum((prev) => prev + 3);
         }
     };

@@ -122,7 +122,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         setLikelist((prev) => !prev);
     };
     return (
-    <div>
+    <>
         {
             editing ? (
                 <div className={yaweetStyle.yaweetBox}>
@@ -190,7 +190,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                 </div>
             )
         }
-    </div>
+    </>
     );
 };
 

@@ -17,6 +17,7 @@
 
 .form {
     margin-top: 20px;
+    text-align: center;
 }
 
 .form .buttons {
@@ -25,6 +26,7 @@
     display: flex;
     justify-content: space-between;
     top: 0;
+    left: calc(50% - 125px);
 }
 
 .form .buttons button {
@@ -51,7 +53,7 @@
     display: flex;
     position:relative;
     width: 250px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
     justify-content: center;
 }
 
