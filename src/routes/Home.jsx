@@ -7,9 +7,8 @@ import yaweetStyle from "css/yaweet.module.css";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 
-let lastVisible = undefined;
-
 const Home = ({ userObj }) => {
+    let lastVisible = undefined;
     const [yaweets, setYaweets] = useState([]);
     const getNextPost = () => {
         let q;

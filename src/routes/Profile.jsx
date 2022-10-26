@@ -1,5 +1,5 @@
 import { deleteUser, signOut, updateProfile } from "firebase/auth";
-import { collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, limit, onSnapshot, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore";
 import { authService, dbService, storageService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +8,15 @@ import Yaweet from "components/Yaweet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
+
 
 const Profile = ({ userObj, refreshUser }) => {
+    let lastVisible = undefined;
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const [myYaweets, setMyYaweets] = useState([]);
     const [newPhoto, setNewPhoto] = useState("")
     const [complete, setComplete] = useState(false);
-    const [num, setNum] = useState(5)
     const navigate = useNavigate();
     const onLogOutClick = () => {
         signOut(authService);
@@ -27,39 +29,32 @@ const Profile = ({ userObj, refreshUser }) => {
             navigate("/");
         }
     };
-    const getMyYaweet = async() => {
-        const q = query(
-            collection(dbService, "yaweets"),
-            where("creatorId", "==", userObj.uid),
-            orderBy("createdAt", "desc")
-        );
+
+    const getMyYaweet = () => {
+        let q;
+        if (lastVisible === -1) {
+            return;
+        } else if (lastVisible) {
+            q = query(collection(dbService, "yaweets"),where("creatorId", "==", userObj.uid),orderBy("createdAt", "desc"),limit(2),startAfter(lastVisible));
+        } else {
+            q = query(collection(dbService, "yaweets"),where("creatorId", "==", userObj.uid),orderBy("createdAt", "desc"),limit(5));
+        }
         onSnapshot(q, (snapshot) => {
-            const myYaweet = snapshot.docs.map((doc) => ({
+            const yaweetArr = snapshot.docs.map((doc) => ({
                 id:doc.id,
                 displayName: doc.displayName,
                 ...doc.data(),
             }));
-            setMyYaweets(myYaweet);
+            const arr = [...myYaweets, ...yaweetArr]
+            setMyYaweets(arr);
+            if(snapshot.docs.length === 0) {
+                lastVisible = -1;
+            } else {
+                lastVisible = snapshot.docs[snapshot.docs.length - 1]
+            }
         });
     };
-    const handleScroll = () => {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight) {
-          setNum((prev) => prev + 3);
-        }
-    };
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    },[]);
-    useEffect(() => {
-        getMyYaweet();
-    }, [])
     const onChange = (event) => {
         const {value} = event.target;
         if(value.length <= 10) {
@@ -103,6 +98,14 @@ const Profile = ({ userObj, refreshUser }) => {
         };
         reader.readAsDataURL(theFile);
     };
+
+    useBottomScrollListener(getMyYaweet);
+
+    useEffect(() => {
+        getMyYaweet();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
     return (
         <>
             <form onSubmit={onSubmit} className={profileStyle.form}>
@@ -121,12 +124,8 @@ const Profile = ({ userObj, refreshUser }) => {
                 </div>
             </form>
             <div>
-                {myYaweets.map((myYaweet, index) => {
-                    if(index < num) {
-                        return (
-                            <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} userObj={userObj} isOwner={true} />
-                        )}
-                    }
+                {myYaweets.map((myYaweet, index) =>
+                    <Yaweet key={myYaweet.id} yaweetObj={myYaweet} fileUrl={myYaweet.fileUrl} userObj={userObj} isOwner={true} />
                 )}
             </div>
         </>

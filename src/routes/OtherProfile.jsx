@@ -1,32 +1,48 @@
 import { useLocation } from "react-router-dom";
 import profileStyle from "css/profile.module.css";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { collection, limit, onSnapshot, orderBy, query, startAfter, where } from "firebase/firestore";
 import Yaweet from "components/Yaweet";
 import { dbService } from "mybase";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 const OtherProfile = ({userObj}) => {
+    let lastVisible = undefined;
     const data = useLocation();
     const yaweetObj = data.state.yaweetObj;
     const [yaweets, setYaweets] = useState([]);
-    const getYaweet = async() => {
-        const q = query(
-            collection(dbService, "yaweets"),
-            where("creatorId", "==", yaweetObj.creatorId),
-            orderBy("createdAt", "desc")
-        );
+
+    const getNextPost = () => {
+        let q;
+        if (lastVisible === -1) {
+            return;
+        } else if (lastVisible) {
+            q = query(collection(dbService, "yaweets"),where("creatorId", "==", yaweetObj.creatorId),orderBy("createdAt", "desc"),limit(2),startAfter(lastVisible));
+        } else {
+            q = query(collection(dbService, "yaweets"),where("creatorId", "==", yaweetObj.creatorId),orderBy("createdAt", "desc"),limit(5));
+        }
         onSnapshot(q, (snapshot) => {
-            const yaweet = snapshot.docs.map((doc) => ({
+            const yaweetArr = snapshot.docs.map((doc) => ({
                 id:doc.id,
                 displayName: doc.displayName,
                 ...doc.data(),
             }));
-            setYaweets(yaweet);
+            const arr = [...yaweets, ...yaweetArr]
+            setYaweets(arr);
+            if(snapshot.docs.length === 0) {
+                lastVisible = -1;
+            } else {
+                lastVisible = snapshot.docs[snapshot.docs.length - 1]
+            }
         });
-    };
+    }
+
+    useBottomScrollListener(getNextPost);
+
     useEffect(() => {
-        getYaweet();
-    }, []);
+        getNextPost();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     return (
         <>
             <div className={profileStyle.form}>
