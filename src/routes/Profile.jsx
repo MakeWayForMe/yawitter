@@ -3,7 +3,6 @@ import { collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "f
 import { authService, dbService, storageService } from "mybase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import yaweetStyle from "css/yaweet.module.css";
 import profileStyle from "css/profile.module.css";
 import Yaweet from "components/Yaweet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -105,7 +104,7 @@ const Profile = ({ userObj, refreshUser }) => {
         reader.readAsDataURL(theFile);
     };
     return (
-        <div className={yaweetStyle.yaweetArea}>
+        <>
             <form onSubmit={onSubmit} className={profileStyle.form}>
                 <div className={profileStyle.profileImg}>
                     <img src={newPhoto ? newPhoto : userObj.photoURL} alt="프로필" width="100%" />
@@ -130,7 +129,7 @@ const Profile = ({ userObj, refreshUser }) => {
                     }
                 )}
             </div>
-        </div>
+        </>
     );
 }
 

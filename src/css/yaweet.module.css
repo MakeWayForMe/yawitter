@@ -286,9 +286,6 @@
 }
 
 @media all and (max-width:640px) {
-    .yaweetArea {
-        margin-top: 40px;
-    }
     .likelist button {
         top: 20px;
         right: 20px;
@@ -330,5 +327,4 @@
         color: white;
         font-size: 50px;
     }
-    .likelist{width: 94%;}
 }

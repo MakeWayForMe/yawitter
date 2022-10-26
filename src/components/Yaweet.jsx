@@ -122,7 +122,7 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
         setLikelist((prev) => !prev);
     };
     return (
-    <>
+    <div>
         {
             editing ? (
                 <div className={yaweetStyle.yaweetBox}>
@@ -183,14 +183,14 @@ const Yaweet = ({yaweetObj, isOwner, fileUrl, userObj}) => {
                     <p className={yaweetStyle.date}>{writeDate(yaweetObj.createdAt)}</p>
                     { zoom && (
                     <div className={yaweetStyle.zoom}>
-                        <img src={yaweetObj.fileUrl} />
+                        <img src={yaweetObj.fileUrl} alt="이미지" />
                         <button type="button" onClick={zoomOut}><FontAwesomeIcon icon={faXmark} /></button>
                     </div>
                     )}
                 </div>
             )
         }
-    </>
+    </div>
     );
 };
 
