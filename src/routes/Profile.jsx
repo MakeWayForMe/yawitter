@@ -10,9 +10,9 @@ import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
+let lastVisible = undefined;
 
 const Profile = ({ userObj, refreshUser }) => {
-    let lastVisible = undefined;
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const [myYaweets, setMyYaweets] = useState([]);
     const [newPhoto, setNewPhoto] = useState("")

@@ -6,8 +6,8 @@ import Yaweet from "components/Yaweet";
 import { dbService } from "mybase";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
+let lastVisible = undefined;
 const OtherProfile = ({userObj}) => {
-    let lastVisible = undefined;
     const data = useLocation();
     const yaweetObj = data.state.yaweetObj;
     const [yaweets, setYaweets] = useState([]);
