@@ -292,11 +292,11 @@
     }
 
     .yaweetArea {
-        width: 94%;
+        width: 94vw;
     }
 
     .form {
-        width: 94%;
+        width: 94vw;
     }
 
     .textarea {
@@ -309,7 +309,7 @@
     }
 
     .yaweetBox {
-        width: 94%;
+        width: 94vw;
         margin: 20px auto 0;
         padding: 20px;
     }
